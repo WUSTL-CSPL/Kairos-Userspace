@@ -1,0 +1,44 @@
+[
+  {
+    "comment":"Query found: NodeInstance type_check:/fictibase",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/fictibase"
+      }
+    ],
+    "location":{
+      "configuration":"type_check"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance type_check:/ficticontrol",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/ficticontrol"
+      }
+    ],
+    "location":{
+      "configuration":"type_check"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: (Publication of node '/ficticontrol' to topic '/teleop_cmd' of type 'std_msgs/Empty', Subscription of node '/fictibase' to topic '/teleop_cmd' of type 'std_msgs/Float64')",
+    "resources":[],
+    "location":{
+      "configuration":"type_check"
+    },
+    "rule":"user:type_check_topics"
+  },
+  {
+    "comment":"Query found: (Subscription of node '/fictibase' to topic '/teleop_cmd' of type 'std_msgs/Float64', Publication of node '/ficticontrol' to topic '/teleop_cmd' of type 'std_msgs/Empty')",
+    "resources":[],
+    "location":{
+      "configuration":"type_check"
+    },
+    "rule":"user:type_check_topics"
+  }
+]

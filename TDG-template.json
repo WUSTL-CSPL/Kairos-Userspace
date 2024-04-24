@@ -1,0 +1,10 @@
+{
+    "existing-num-vertex": 1,
+    "input-tasks": ["ROSGrabImu","ROSGrabImageLeft", "ROSGrabImageRight"],
+
+    "dependency": {
+        "SyncWithImu": {
+            "deps": ["ROSGrabImu", "ROSGrabImageLeft", "ROSGrabImageRight"]  
+        }
+    }
+}

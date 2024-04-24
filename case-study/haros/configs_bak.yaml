@@ -1,0 +1,10 @@
+%YAML 1.1
+---
+workspace: '/home/cspl/Shore-user/case-study/catkin_ws'
+environment: null
+plugin_blacklist: []
+cpp:
+   parser_lib: '/home/cspl/llvm-project/build/lib'
+   std_includes: '/home/cspl/llvm-project/build/lib/clang/13.0.1/include'
+   compile_db: '/home/cspl/Shore-user/case-study/catkin_ws/build'
+

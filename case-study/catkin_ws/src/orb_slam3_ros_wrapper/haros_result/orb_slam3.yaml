@@ -1,0 +1,37 @@
+%YAML 1.1
+---
+project: ORB_SLAM3
+packages:
+    - orb_slam3_ros_wrapper
+    - roscpp
+    - rospy
+    - std_msgs
+    - cv_bridge
+    - image_transport
+    - tf
+    - sensor_msgs
+    - message_generation
+configurations:
+    # euroc_mono:
+    #     launch:
+    #         - orb_slam3_ros_wrapper/launch/euroc_mono.launch
+    # euroc_monoimu:
+    #     launch:
+    #         - orb_slam3_ros_wrapper/launch/euroc_monoimu.launch
+    # euroc_stereo:
+    #     launch:
+    #         - orb_slam3_ros_wrapper/launch/euroc_stereo.launch
+    euroc_stereoimu:
+        launch:
+            - orb_slam3_ros_wrapper/launch/euroc_stereoimu.launch
+    # live_t265:
+    #     launch:
+    #         - orb_slam3_ros_wrapper/launch/live_t265.launch
+    # tum_rgbd:
+    #     launch:
+    #         - orb_slam3_ros_wrapper/launch/tum_rgbd.launch
+analysis:
+    ignore:
+        tags:
+            - formatting
+            - copyright

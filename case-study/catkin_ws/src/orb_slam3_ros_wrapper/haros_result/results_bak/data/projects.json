@@ -1,0 +1,17 @@
+[
+  {
+    "id":"ORB_SLAM3",
+    "packages":[
+      "message_generation",
+      "rospy",
+      "std_msgs",
+      "roscpp",
+      "sensor_msgs",
+      "cv_bridge",
+      "image_transport",
+      "tf",
+      "orb_slam3_ros_wrapper"
+    ],
+    "repositories":[]
+  }
+]

@@ -1,0 +1,8 @@
+*.pyc
+parser.out
+parsetab.py
+.hist
+.queries
+.swork.*
+env
+

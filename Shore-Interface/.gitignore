@@ -1,0 +1,36 @@
+# Object files
+*.o
+
+*.symvers
+*.ko
+
+
+# Module files
+*.mod
+*.mod.c
+
+# Generated files
+modules.order
+*.cmd
+
+# Build directories
+build/
+Release/
+Debug/
+
+# Temporary files
+*.tmp
+*~
+
+# Editor backups
+*.bak
+*.swp
+*.swo
+
+# Log files
+*.log
+
+# Other common ignores
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,54 @@
+[
+  {
+    "comment":"Query found: NodeInstance dual_bots:/one/fictibase",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/one/fictibase"
+      }
+    ],
+    "location":{
+      "configuration":"dual_bots"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance dual_bots:/one/ficticontrol",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/one/ficticontrol"
+      }
+    ],
+    "location":{
+      "configuration":"dual_bots"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance dual_bots:/two/fictibase",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/two/fictibase"
+      }
+    ],
+    "location":{
+      "configuration":"dual_bots"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance dual_bots:/two/ficticontrol",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/two/ficticontrol"
+      }
+    ],
+    "location":{
+      "configuration":"dual_bots"
+    },
+    "rule":"user:match_multiple_times"
+  }
+]

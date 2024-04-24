@@ -1,0 +1,28 @@
+[
+  {
+    "comment":"Query found: NodeInstance minimal:/fictibase",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/fictibase"
+      }
+    ],
+    "location":{
+      "configuration":"minimal"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance minimal:/ficticontrol",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/ficticontrol"
+      }
+    ],
+    "location":{
+      "configuration":"minimal"
+    },
+    "rule":"user:match_multiple_times"
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "comment":"Query found: NodeInstance params:/fictibase",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/fictibase"
+      }
+    ],
+    "location":{
+      "configuration":"params"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance params:/ficticontrol",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/ficticontrol"
+      }
+    ],
+    "location":{
+      "configuration":"params"
+    },
+    "rule":"user:match_multiple_times"
+  }
+]

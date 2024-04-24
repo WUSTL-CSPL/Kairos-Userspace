@@ -1,0 +1,36 @@
+[
+  {
+    "comment":"Query found: NodeInstance missing_remap:/fictibase",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/fictibase"
+      }
+    ],
+    "location":{
+      "configuration":"missing_remap"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: NodeInstance missing_remap:/ficticontrol",
+    "resources":[
+      {
+        "resourceType":"node",
+        "name":"/ficticontrol"
+      }
+    ],
+    "location":{
+      "configuration":"missing_remap"
+    },
+    "rule":"user:match_multiple_times"
+  },
+  {
+    "comment":"Query found: (Configuration missing_remap, ({u'sub': Subscription of node '/ficticontrol' to topic '/bumper' of type 'std_msgs/Int8', u'pub': Publication of node '/fictibase' to topic '/fictibase/bumper' of type 'std_msgs/Int8'}, {u'sub': Subscription of node '/ficticontrol' to topic '/laser' of type 'std_msgs/Int8', u'pub': Publication of node '/fictibase' to topic '/fictibase/laser' of type 'std_msgs/Int8'}, {u'sub': Subscription of node '/ficticontrol' to topic '/wheel' of type 'std_msgs/Int8', u'pub': Publication of node '/fictibase' to topic '/fictibase/wheel' of type 'std_msgs/Int8'}))\nReported in configuration missing_remap",
+    "resources":[],
+    "location":{
+      "configuration":"missing_remap"
+    },
+    "rule":"user:disconnected_similar_topics"
+  }
+]

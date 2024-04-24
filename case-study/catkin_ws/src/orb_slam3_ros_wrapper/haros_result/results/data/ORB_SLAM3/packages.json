@@ -1,0 +1,323 @@
+[
+  {
+    "id":"message_generation",
+    "metapackage":false,
+    "version":"0.4.1",
+    "description":"Package modeling the build-time dependencies for generating language bindings of messages.",
+    "wiki":"http://ros.org/wiki/message_generation",
+    "repository":"https://github.com/ros/message_generation",
+    "bugTracker":"https://github.com/ros/message_generation/issues",
+    "authors":[],
+    "maintainers":[
+      "Dirk Thomas"
+    ],
+    "dependencies":[
+      "genmsg",
+      "geneus",
+      "gennodejs",
+      "genpy",
+      "genlisp",
+      "gencpp"
+    ],
+    "size":"0.78",
+    "lines":21,
+    "sloc":18,
+    "analysis":{
+      "violations":{},
+      "metrics":{}
+    }
+  },
+  {
+    "id":"rospy",
+    "metapackage":false,
+    "version":"1.16.0",
+    "description":"rospy is a pure Python client library for ROS. The rospy client\n    API enables Python programmers to quickly interface with ROS",
+    "wiki":"http://wiki.ros.org/rospy",
+    "repository":"https://github.com/ros/ros_comm",
+    "bugTracker":"https://github.com/ros/ros_comm/issues",
+    "authors":[
+      "Dirk Thomas",
+      "Jacob Perron",
+      "Ken Conley"
+    ],
+    "maintainers":[
+      "Michael Carroll",
+      "Shane Loretz"
+    ],
+    "dependencies":[],
+    "size":"11.89",
+    "lines":293,
+    "sloc":262,
+    "analysis":{
+      "violations":{
+        "max_cyclomatic_complexity_10":2,
+        "haros_plugin_pylint:convention":16,
+        "haros_plugin_pylint:warning":5,
+        "haros_plugin_pylint:error":1,
+        "haros_plugin_pylint:refactor":1
+      },
+      "metrics":{}
+    }
+  },
+  {
+    "id":"std_msgs",
+    "metapackage":false,
+    "version":"0.5.13",
+    "description":"Standard ROS Messages including common message types representing primitive data types and other basic message constructs, such as multiarrays.\n    For common, generic robot-specific message types, please see",
+    "wiki":"http://www.ros.org/wiki/std_msgs",
+    "repository":"https://github.com/ros/std_msgs",
+    "bugTracker":"https://github.com/ros/std_msgs/issues",
+    "authors":[
+      "Morgan Quigley",
+      "Ken Conley",
+      "Jeremy Leibs"
+    ],
+    "maintainers":[
+      "Tully Foote"
+    ],
+    "dependencies":[
+      "message_generation",
+      "message_runtime"
+    ],
+    "size":"5.13",
+    "lines":151,
+    "sloc":123,
+    "analysis":{
+      "violations":{},
+      "metrics":{}
+    }
+  },
+  {
+    "id":"roscpp",
+    "metapackage":false,
+    "version":"1.16.0",
+    "description":"roscpp is a C++ implementation of ROS. It provides\n    a",
+    "wiki":"http://ros.org/wiki/roscpp",
+    "repository":null,
+    "bugTracker":null,
+    "authors":[
+      "Dirk Thomas",
+      "Jacob Perron",
+      "Morgan Quigley"
+    ],
+    "maintainers":[
+      "Michael Carroll",
+      "Shane Loretz"
+    ],
+    "dependencies":[
+      "libboost-chrono-dev",
+      "message_generation",
+      "libboost-system-dev",
+      "rosgraph_msgs",
+      "std_msgs",
+      "xmlrpcpp",
+      "pkg-config",
+      "roscpp_serialization",
+      "rostime",
+      "cpp_common",
+      "message_runtime",
+      "libboost-filesystem-dev",
+      "rosconsole",
+      "roscpp_traits",
+      "roslang"
+    ],
+    "size":"43.00",
+    "lines":1088,
+    "sloc":914,
+    "analysis":{
+      "violations":{
+        "halstead_volume_above_8000":1,
+        "halstead_bugs_above_2":1,
+        "haros_plugin_cpplint:complex_comment":12,
+        "haros_plugin_cpplint:alternative_tokens":2,
+        "haros_plugin_cpplint:include_what_you_use":1,
+        "max_function_length_40":1,
+        "haros_plugin_pylint:convention":209,
+        "haros_plugin_pylint:warning":23,
+        "haros_plugin_pylint:refactor":3
+      },
+      "metrics":{}
+    }
+  },
+  {
+    "id":"sensor_msgs",
+    "metapackage":false,
+    "version":"1.13.1",
+    "description":"This package defines messages for commonly used sensors, including\n    cameras and scanning laser rangefinders.",
+    "wiki":"http://ros.org/wiki/sensor_msgs",
+    "repository":null,
+    "bugTracker":null,
+    "authors":[
+      "Tully Foote"
+    ],
+    "maintainers":[
+      "Michel Hidalgo"
+    ],
+    "dependencies":[
+      "std_msgs",
+      "message_generation",
+      "geometry_msgs"
+    ],
+    "size":"32.50",
+    "lines":724,
+    "sloc":605,
+    "analysis":{
+      "violations":{},
+      "metrics":{}
+    }
+  },
+  {
+    "id":"cv_bridge",
+    "metapackage":false,
+    "version":"1.16.2",
+    "description":"This contains CvBridge, which converts between ROS\n    Image messages and OpenCV images.",
+    "wiki":"http://www.ros.org/wiki/cv_bridge",
+    "repository":"https://github.com/ros-perception/vision_opencv",
+    "bugTracker":"https://github.com/ros-perception/vision_opencv/issues",
+    "authors":[
+      "Patrick Mihelich"
+    ],
+    "maintainers":[
+      "Vincent Rabaud"
+    ],
+    "dependencies":[
+      "boost",
+      "sensor_msgs",
+      "libopencv-dev",
+      "python3-opencv",
+      "python3",
+      "rosconsole"
+    ],
+    "size":"1.40",
+    "lines":41,
+    "sloc":35,
+    "analysis":{
+      "violations":{},
+      "metrics":{}
+    }
+  },
+  {
+    "id":"image_transport",
+    "metapackage":false,
+    "version":"1.12.0",
+    "description":"image_transport should always be used to subscribe to and publish images. It provides transparent\n     support for transporting images in low-bandwidth compressed formats. Examples (provided by separate\n     plugin packages) include JPEG/PNG compression and Theora streaming video.",
+    "wiki":"http://ros.org/wiki/image_transport",
+    "repository":"https://github.com/ros-perception/image_common",
+    "bugTracker":"https://github.com/ros-perception/image_common/issues",
+    "authors":[
+      "Patrick Mihelich"
+    ],
+    "maintainers":[
+      "Jack O'Quin",
+      "Vincent Rabaud"
+    ],
+    "dependencies":[
+      "sensor_msgs",
+      "roslib",
+      "message_filters",
+      "pluginlib",
+      "rosconsole",
+      "roscpp"
+    ],
+    "size":"2.04",
+    "lines":52,
+    "sloc":44,
+    "analysis":{
+      "violations":{},
+      "metrics":{}
+    }
+  },
+  {
+    "id":"tf",
+    "metapackage":false,
+    "version":"1.13.2",
+    "description":"tf is a package that lets the user keep track of multiple coordinate\nframes over time. tf maintains the relationship between coordinate\nframes in a tree structure buffered in time, and lets the user\ntransform points, vectors, etc between any two coordinate frames at\nany desired point in time.",
+    "wiki":"http://www.ros.org/wiki/tf",
+    "repository":null,
+    "bugTracker":null,
+    "authors":[
+      "Tully Foote"
+    ],
+    "maintainers":[
+      "Tully Foote"
+    ],
+    "dependencies":[
+      "std_msgs",
+      "message_generation",
+      "sensor_msgs",
+      "geometry_msgs",
+      "angles",
+      "roswtf",
+      "message_filters",
+      "tf2_ros",
+      "rostime",
+      "message_runtime",
+      "rosconsole",
+      "graphviz",
+      "roscpp"
+    ],
+    "size":"2.52",
+    "lines":58,
+    "sloc":50,
+    "analysis":{
+      "violations":{},
+      "metrics":{}
+    }
+  },
+  {
+    "id":"orb_slam3_ros_wrapper",
+    "metapackage":false,
+    "version":"0.0.1",
+    "description":"ROS wrapper for ORB SLAM3.",
+    "wiki":null,
+    "repository":null,
+    "bugTracker":null,
+    "authors":[],
+    "maintainers":[
+      "Thien Nguyen"
+    ],
+    "dependencies":[
+      "std_msgs",
+      "sensor_msgs",
+      "message_generation",
+      "cv_bridge",
+      "rospy",
+      "tf",
+      "message_runtime",
+      "image_transport",
+      "roscpp"
+    ],
+    "size":"65.46",
+    "lines":1930,
+    "sloc":1565,
+    "analysis":{
+      "violations":{
+        "haros_plugin_pylint:convention":11,
+        "haros_plugin_pylint:warning":6,
+        "halstead_volume_above_8000":4,
+        "halstead_bugs_above_2":4,
+        "haros_plugin_cpplint:header_guard":1,
+        "haros_plugin_cpplint:unapproved_headers":3,
+        "haros_plugin_cpplint:include_what_you_use":1,
+        "haros_plugin_cppcheck:cppcheckRule":9,
+        "haros_plugin_cppcheck:harosIntegerTypes":10,
+        "haros_plugin_cpplint:dir_in_header":6,
+        "haros_plugin_cpplint:non_const_ref":2,
+        "max_function_length_40":7,
+        "haros_plugin_cppcheck:unreadVariable":6,
+        "haros_plugin_cpplint:using_directives":5,
+        "haros_plugin_cpplint:redundant_empty_statement":2,
+        "haros_plugin_cpplint:explicit_constructors":3,
+        "no_global_names":3,
+        "haros_plugin_cppcheck:variableScope":2,
+        "max_eloc_50":1,
+        "max_cyclomatic_complexity_10":1,
+        "mi_below_65":2
+      },
+      "metrics":{
+        "haros_plugin_cccc:fan_in":3,
+        "haros_plugin_cccc:fan_out":2
+      }
+    }
+  }
+]
