@@ -78,9 +78,9 @@ f. Start to run the :point_right: [End-to-End Running Example](#End-to-End-Runni
 
 If you want to build from source code. Please go the guided of installation:
 
-Shore-Userspace: :point_right: xxx TODO
-Shore-Middleware: :point_right:
-Shore-Kernel: :point_right:
+Shore-Userspace: :point_right: [link](https://github.com/WUSTL-CSPL/Shore-Userspace/blob/main/INSTALLATION.md)  
+Shore-Middleware: :point_right:  [link](https://github.com/WUSTL-CSPL/Shore-Middleware/blob/main/README.md)  
+Shore-Kernel: :point_right:  [link](https://github.com/WUSTL-CSPL/Shore-Kernel/blob/main/README.MD)
 
 
 
@@ -103,21 +103,6 @@ $ source ./vis_script.sh
 ```
 3. The script will cp the generated result `haros_vis.pdf` to `~/Shore-user/case-study/haros`.
 
-
-<!-- 1. Build ORB-SLAM3 with Clang
-```
-$ cd ~/Shore-user/case-study/catkin_ws 
-$ catkin_make --force-cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_CXX_COMPILER=${LLVM_DIR}/bin/clang++ -DCMAKE_C_COMPILER=${LLVM_DIR}/bin/clang
-```
-2. Run the task level
-
-5. cd ~/Shore-user/case-study/catkin_ws/src/orb_slam3_ros_wrapper/haros_result` 
-6. 
-7. and run `python3 ~/Shore-user/case-study/haros/haros-runner.py full --server-host 0.0.0.0:8080 --no-cache -n -p orb_slam3.yaml -d results/`
-8. After the analysis is complete, terminate the web server with `enter`, run the provided visualization python script: `python3 haros_vis.py`
-
-A pdf `haros_vis.pdf` will be generated to show the data dependency -->
-<!-- ![task-data-dependency](https://hackmd.io/_uploads/rykO25QxC.png) -->
 
 <img src="./scripts/vis.pdf" alt="task-data-dependency" width="700" height="400">
 
@@ -303,7 +288,7 @@ We disabled many logs by default to prevent application lag due to the high proc
         ```
         d. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)
 
-    * Kernel and network schedulers  
+    <!-- * Kernel and network schedulers  
         a. Go to the file
         b. Uncomment
         c. Re-compile the kernel
@@ -312,4 +297,4 @@ We disabled many logs by default to prevent application lag due to the high proc
         ```
 
         d. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)
- 
+  -->
