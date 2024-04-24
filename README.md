@@ -67,12 +67,12 @@ The source code of three main components are located at:
 ```
 
 **Steps:**
-a. Download and install TeamViewer Free edition from https://www.teamviewer.com/en-us/content/free-download-with-license-options/.
-b. Under "Control Remote Computer," enter `383780254` as the Partner ID.
-c. Click "Connect" (You may need to register a free acount for remote connection).
-d. Enter password `OSDI2024DFA!` and log on.
-e. If the sudo password is required on the machine, it is `cspl`.
-f. Start to run the :point_right: [End-to-End Running Example](#End-to-End-Running-Example).
+a. Download and install TeamViewer Free edition from https://www.teamviewer.com/en-us/content/free-download-with-license-options/.  
+b. Under "Control Remote Computer," enter `383780254` as the Partner ID.  
+c. Click "Connect" (You may need to register a free acount for remote connection).  
+d. Enter password `OSDI2024DFA!` and log on.  
+e. If the sudo password is required on the machine, it is `cspl`.  
+f. Start to run the :point_right: [End-to-End Running Example](#End-to-End-Running-Example).  
 
 ### Option #2: Build from Source Code on Your Local Machine
 
