@@ -275,29 +275,29 @@ The steps outlined above generate results for ORB-SLAM under high system overhea
 
 ## [Optional] Enable More Logs to Further Verify the Functionalities
 
-We disabled many logs by default to prevent application lag due to the high processing frequency. Evaluators can enable these logs to verify functionality.
+We disabled many logs by default to prevent application lag due to the high processing frequency. Evaluators can enable these logs to verify functionality.  
 
 
-* To verify the timing information updating and constraint annotation.
+* To verify the timing information updating and constraint annotation.  
 
-    a. Go to the file `~/Shore-user/Shore-TimingAnnotation/instrumentationLib/timing-correctness.cpp` 
-    b. Uncomment this line `// #define SHORE_DEBUG`
-    c. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)
+    a. Go to the file `~/Shore-user/Shore-TimingAnnotation/instrumentationLib/timing-correctness.cpp`  
+    b. Uncomment this line `// #define SHORE_DEBUG`  
+    c. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)  
 
 
 * To verify the scheduling decision enforcement across layer 
 
     * ROS scheduler
-        a. Go to the file `~/ros_catkin_ws/src/ros_comm/roscpp/include/ros/param.h`
-        b. Uncomment this line `// #define Shore_Debug`
-        c. Compile the ROS middleware
+        a. Go to the file `~/ros_catkin_ws/src/ros_comm/roscpp/include/ros/param.h`  
+        b. Uncomment this line `// #define Shore_Debug`  
+        c. Compile the ROS middleware  
         ```
         $ cd ~/ros_catkin_ws
         $ ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release            
         ```
-        d. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)
+        d. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)  
 
-    <!-- * Kernel and network schedulers  
+    <!-- * Kernel and network schedulers    
         a. Go to the file
         b. Uncomment
         c. Re-compile the kernel
