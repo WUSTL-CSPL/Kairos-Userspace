@@ -84,9 +84,9 @@ void LocalMapping::Run()
             std::chrono::steady_clock::time_point time_StartProcessKF = std::chrono::steady_clock::now();
 #endif
 
-            // Expected / Tolerable frequency is 1.0
+            // Expected / Tolerable frequency is 0.5
             int mapInserted = 0;
-            STABILITY(&mapInserted, 1.0, HandlingPolicy::PRIORITIZATION);
+            STABILITY(&mapInserted, 0.5, HandlingPolicy::PRIORITIZATION);
 
             // BoW conversion and insertion in Map
             ProcessNewKeyFrame();

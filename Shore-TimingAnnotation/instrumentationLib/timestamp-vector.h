@@ -107,6 +107,7 @@ class TimestampVec {
         return 0;
     }
 
+    // T is double type
     int compareBetween(T t1, T t2, double threshold) {
         // t1 is larger than t2
 
@@ -126,20 +127,25 @@ class TimestampVec {
 
             T curr_interval = curr - last;
 
+#ifdef DEBUG
             if (curr_interval < 0.0) {
                 printf("Timestamps are not in order: curr %f vs last %f\n",
                        curr, last);
                 return -1;
             }
+#endif
 
             T max_interval = std::max(curr_interval, last_interval);
             T min_interval = std::min(curr_interval, last_interval);
 
-            if (max_interval > 2 * min_interval) {
+
+            if (max_interval > 3 * min_interval) {
                 // Some frames are dropped
-                printf("Frame dropped\n");
+#ifdef Shore_DEBUG
+                printf("[Warning] Frame dropped\n");
                 printf("Max interval: %f, Min interval: %f\n", max_interval,
                        min_interval);
+#endif // Shore_DEBUG
                 return -1;
             }
 
@@ -179,10 +185,17 @@ class TimestampVec {
         return buffer[(tail - 1 + maxSize) % maxSize];
     }
 
+    T atReversed(size_t index) {
+        //        std::lock_guard<std::mutex> lock(mtx); // Lock the mutex
+        if (index >= count) return T();  // Should ensure there's data to pop
+        // Index is stared from 0
+        return buffer[(tail - (index+1) + maxSize) % maxSize];
+    }
+
     T at(size_t index) {
         //        std::lock_guard<std::mutex> lock(mtx); // Lock the mutex
         if (index >= count) return T();  // Should ensure there's data to pop
-        return buffer[(tail - index + maxSize) % maxSize];
+        return buffer[(head + index) % maxSize];
     }
 
     bool isEmpty() const { return count == 0; }
@@ -205,9 +218,12 @@ class TimestampVec {
     }
 
     void print() const {
+        printf("Printing TimestampVec: \n");
+
         for (size_t i = 0; i < count; ++i) {
-            std::cout << buffer[(head + i) % maxSize] << " ";
+            std::cout << buffer[(head + i) % maxSize] << " \n";
         }
         std::cout << std::endl;
+        printf("------------------------ \n");
     }
 };

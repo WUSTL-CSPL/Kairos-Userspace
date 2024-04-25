@@ -301,9 +301,6 @@ int TimingVertex::addPrecVertexByID(
 }
 
 void TimingVertex::updateTimingVertex(double sensor_timestamp) {
-    auto now = std::chrono::system_clock::now();
-    auto duration = now.time_since_epoch();
-    double time_point = std::chrono::duration<double>(duration).count();
 
     ////////////////////////////////////
     // Update `def` timestamp
@@ -346,7 +343,8 @@ void TimingVertex::updateTimingVertex(double sensor_timestamp) {
     ////////////////////////////////////
     // Update `use` timestamp
     ////////////////////////////////////
-    this->uses->push(time_point);
+    this->updateUseTiming();
+
 #ifdef SHORE_DEBUG
     printf("[Timing Update] Vertex %d is updated with use time %f\n", this->id,
            this->uses->latest());
@@ -478,8 +476,8 @@ bool TimingVertex::checkConsistency(double threshold) {
             }
 
             // Get the frequency larger one
-            double interval_src_1 = defs_src_1->at(0) - defs_src_1->at(1);
-            double interval_src_2 = defs_src_2->at(0) - defs_src_2->at(1);
+            double interval_src_1 = defs_src_1->atReversed(0) - defs_src_1->atReversed(1);
+            double interval_src_2 = defs_src_2->atReversed(0) - defs_src_2->atReversed(1);
 
             // We swap the sources to simplify the comparison
             if (interval_src_1 < interval_src_2) {
@@ -495,7 +493,7 @@ bool TimingVertex::checkConsistency(double threshold) {
                 int ret =
                     defs_src_1->compareToWithSize(defs_src_2, 2, threshold);
                 if (ret == -1) {
-                    printf("[Warning] Temporal consistency is violated\n");
+                    // printf("[Warning] Temporal consistency is violated\n");
                     return true;
                 } else {
                     return false;
@@ -503,9 +501,10 @@ bool TimingVertex::checkConsistency(double threshold) {
             } else {
                 // The two sources have different frequencies
                 int ret = defs_src_2->compareBetween(
-                    defs_src_1->at(0), defs_src_1->at(1), threshold);
+                    defs_src_1->atReversed(0), defs_src_1->atReversed(1), threshold);
+                    
                 if (ret == -1) {
-                    printf("[Warning] Temporal consistency is violated\n");
+                    // printf("[Warning] Temporal consistency is violated\n");
                     return true;
                 } else {
                     return false;
@@ -518,8 +517,24 @@ bool TimingVertex::checkConsistency(double threshold) {
 }
 
 bool TimingVertex::checkStability(double threshold) {
+
     if (this->stability_timestamp == 0) {
         // Check STABILITY via USE timestamps
+
+        if (this->uses->size() <= 2) {
+            // No need to check
+            return false;
+        }
+
+//   Assume the timing versioning window is 2
+
+        double current_interval = this->uses->atReversed(0) - this->uses->atReversed(1);
+
+        if (current_interval > threshold) {
+            return true;
+        } else {
+            return false;
+        }
 
         std::vector<double> intervals;
 
@@ -545,6 +560,8 @@ bool TimingVertex::checkStability(double threshold) {
         if (jitters > _threshold || min_interval < 0) {
             // min_interval < 0 indicates that the data is not consumed in
             // order
+
+
             return true;
         }
 
@@ -586,15 +603,21 @@ bool TimingVertex::checkTimingCorrectness(TimingConstraintType property,
                                           double threshold) {
     this->_type = property;
     this->_threshold = threshold;
+    
     if (this->_type == TimingConstraintType::TYPE_FRESHNESS) {
         // Check freshness
         return this->checkFreshness(threshold);
+
     } else if (this->_type == TimingConstraintType::TYPE_CONSISTENCY) {
+
         return this->checkConsistency(threshold);
 
     } else if (this->_type == TimingConstraintType::TYPE_STABILITY) {
+
         return this->checkStability(threshold);
+
     }
+
     return false;
 }
 
@@ -618,7 +641,7 @@ int checkTimingCorrectnessByID(int id, int property, double threshold,
         return ret;
     }
 
-    if (log_loop++ > 300) {
+    if (log_loop++ > 500) {
         log_loop = 0;
 
         for (int i = 0; i < _graph_size; i++)
@@ -635,8 +658,6 @@ int checkTimingCorrectnessByID(int id, int property, double threshold,
         "property "
         "%d, threshold %f, violation_policy %d\n",
         id, property, threshold, violation_policy);
-
-
 #endif  // SHORE_DEBUG
 
     vertex->updateTimingVertex();
@@ -645,8 +666,6 @@ int checkTimingCorrectnessByID(int id, int property, double threshold,
         (TimingConstraintType)property, threshold);
 
     TCViolationHandler* handler = vertex->getPolicyHandler();
-
-    is_violated = 1;
 
     if (is_violated) {
         handler->setPolicy(static_cast<HandlingPolicy>(violation_policy));
@@ -753,16 +772,18 @@ int updateUseTimingByID(int id) {
 void TimingVertex::printTiming() {
     printf("------------------------------------\n");
     printf("Vertex ID: %d\n", this->_id);
-    if (this->hasPrecVertex() || this->is_input) {\
+    if (this->hasPrecVertex() || this->is_input) {
         printf("Current Def Timestamp is : ");
-        if (this->def_sources.size() == 0) {
+        if (this->def_sources.size() == 1 &&
+            this->def_sources[0]->latest() == 0.0) {
             printf("N/A \n");
+        } else {
+            for (int i = 0; i < this->def_sources.size(); i++)
+            {
+                printf("%f ｜ ", this->def_sources[i]->latest());
+            }
+            printf("\n");
         }
-        for (int i = 0; i < this->def_sources.size(); i++)
-        {
-            printf("%f ｜ ", this->def_sources[i]->latest());
-        }
-        printf("\n");
     }
 
     if (this->uses->latest() != 0.0) {

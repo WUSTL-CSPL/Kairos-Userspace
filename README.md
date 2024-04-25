@@ -167,11 +167,12 @@ This steps aims to emulate the high system overhead.
 Install the aggressor workload tool __stress-ng__ if necessary
 `$ sudo apt-get install stress-ng`
 
-Launch the aggressor workload to inject CPU overhead
+Launch the aggressor workload to inject CPU overhead, and then proceed to the next step without waiting for it to finish.
 ```
 $ cd ~/Shore-user/Shore-Interface
 $ ./inject-CPU-overhead.sh
-Enter desired CPU load percentage (1-100): # enter 100 here
+Enter desired CPU load percentage (1-100): # enter 100 here. 
+This differs from the paper's setting (60%) due to a different CPU. To trigger abnormal timing, the value should be higher.
 ```
 
 
@@ -207,9 +208,17 @@ Output Logs: Some logs are tagged with [Shore-debug] and may be outputted. These
 ```
 [Shore-Middlware] User-level task is registered
 
+Vertex ID: 3
+Current Def Timestamp is : 1403637258.488319 ｜ 
+Current Use Timestamp is : 1713996090.786169 
+------------------------------------
+------------------------------------
+Vertex ID: 4
+Current Def Timestamp is : 1403637258.393319 ｜ 1403637258.338319 ｜ 1403637258.338319 ｜ 
+Current Use Timestamp is : 1713996090.688732
 
 ```
-
+**Note**: The large difference between the def and use times is due to the def time being from sensor data replayed from a previously recorded ROS bag.
 
 
 Warning logs originating from the native ORB-SLAM3 software are normal. Such as the following:

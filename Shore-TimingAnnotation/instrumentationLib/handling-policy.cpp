@@ -117,7 +117,10 @@ int TCViolationHandler::handle() {
             ret = 2;
             break;
         case HandlingPolicy::PRIORITIZATION:
+#ifdef Shore_DEBUG
             // Handle prioritize policy
+            printf("[Shore-Debug] Prioritizing the task\n");
+#endif
             prioritization();
             break;
         case HandlingPolicy::SKIP_NEXT:
