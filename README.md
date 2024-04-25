@@ -273,7 +273,7 @@ The steps outlined above generate results for ORB-SLAM under high system overhea
 
 
 
-## Enable More Logs to Further Verify the Functionalities
+## [Optional] Enable More Logs to Further Verify the Functionalities
 
 We disabled many logs by default to prevent application lag due to the high processing frequency. Evaluators can enable these logs to verify functionality.
 
