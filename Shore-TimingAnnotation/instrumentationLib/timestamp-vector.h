@@ -97,7 +97,7 @@ class TimestampVec {
 
         for (size_t i = 0; i < size; ++i) {
             T tmp = other->at(i);
-            if (std::fabs(tmp - this->at(i)) > threshold) {
+            if (std::fabs(tmp - this->at(i)) > 2 * threshold) {
                 other->unlock();
                 printf("Timestamp does not match \n");
                 return -1;
@@ -127,11 +127,11 @@ class TimestampVec {
 
             T curr_interval = curr - last;
 
-#ifdef DEBUG
+#ifdef Shore_DEBUG
             if (curr_interval < 0.0) {
                 printf("Timestamps are not in order: curr %f vs last %f\n",
                        curr, last);
-                return -1;
+                // return -1;
             }
 #endif
 
@@ -139,13 +139,13 @@ class TimestampVec {
             T min_interval = std::min(curr_interval, last_interval);
 
 
-            if (max_interval > 3 * min_interval) {
+            if (max_interval > threshold) {
                 // Some frames are dropped
-#ifdef Shore_DEBUG
+// #ifdef Shore_DEBUG
                 printf("[Warning] Frame dropped\n");
                 printf("Max interval: %f, Min interval: %f\n", max_interval,
                        min_interval);
-#endif // Shore_DEBUG
+// #endif // Shore_DEBUG
                 return -1;
             }
 
@@ -218,6 +218,7 @@ class TimestampVec {
     }
 
     void print() const {
+
         printf("Printing TimestampVec: \n");
 
         for (size_t i = 0; i < count; ++i) {

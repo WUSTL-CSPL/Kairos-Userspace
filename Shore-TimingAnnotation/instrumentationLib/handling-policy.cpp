@@ -102,7 +102,7 @@ int TCViolationHandler::handle() {
     int ret = 0;
 
     if (shouldSkip()) {
-        ret = 2;
+        setAborting(1);
         resetSkipFlag();
         goto early_exit;
     }
@@ -114,7 +114,7 @@ int TCViolationHandler::handle() {
             break;
         case HandlingPolicy::ABORT:
             // This will trigger abort
-            ret = 2;
+            setAborting(1);
             break;
         case HandlingPolicy::PRIORITIZATION:
 #ifdef Shore_DEBUG

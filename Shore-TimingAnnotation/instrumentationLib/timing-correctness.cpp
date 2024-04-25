@@ -675,11 +675,14 @@ int checkTimingCorrectnessByID(int id, int property, double threshold,
             vertex->resetUpdateTimingVertex();
             ret = 1;
         }
-    } else {
-        if (handler->isPrioritizing()) {
-            handler->resetPriority();
-        }
-    }
+
+    } 
+    // else {
+        // if (handler->isPrioritizing()) {
+        //     handler->setIsPrioritizing(0);
+        //     handler->resetPriority();
+        // }
+    // }
 
     return ret;
 }

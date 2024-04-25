@@ -160,6 +160,8 @@ $ cd ~/Shore-user/Shore-Interface/kernel-interface-module
 $ sudo ./shore_kernel_support_script.sh enable
 ```
 
+Note: if it report an error, probably the interface module is already enabled.  
+
 ### 6. Inject System Overhead to Emulate Timing Anormaly [Optional]
 
 This steps aims to emulate the high system overhead.
@@ -171,8 +173,7 @@ Launch the aggressor workload to inject CPU overhead, and then proceed to the ne
 ```
 $ cd ~/Shore-user/Shore-Interface
 $ ./inject-CPU-overhead.sh
-Enter desired CPU load percentage (1-100): # enter 100 here. 
-This differs from the paper's setting (60%) due to a different CPU. To trigger abnormal timing, the value should be higher.
+Enter desired CPU load percentage (1-100): # enter 60 here. 
 ```
 
 
@@ -259,7 +260,7 @@ $ python3 vis_orb_slam_traj_errors.py
 This will reproduce the figure `orb-slam-errors.pdf` (Figure 4(b) in the paper).
       
 
-### 9. Generating Other Results
+### 9. [Optional] Generating Other Results
 
 The steps outlined above generate results for ORB-SLAM under high system overhead with Shore mitigation. Users can also follow these steps to generate results in `~/Shore-user/case-study/plots/data`:
 

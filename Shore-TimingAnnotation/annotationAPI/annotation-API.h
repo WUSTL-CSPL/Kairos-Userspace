@@ -59,8 +59,6 @@ enum HandlingPolicy { NONE = 0, ABORT = 1, PRIORITIZATION = 2, SKIP_NEXT };
     consistency(x, y, t, policy);      \
     if (shouldAbort == 1) {            \
         shouldAbort = 0;               \
-        printf("Frame skipped.\n");    \
-        \    
         continue;                      \
     }
 

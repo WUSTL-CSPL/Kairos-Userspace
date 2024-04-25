@@ -117,19 +117,7 @@ struct DataflowGraphBuilder : public ModulePass {
         //   errs()<<"\nDaaaaDDDD \n";
         
         SVF::Set<SVF::SVFGNode *> upperDefs;
- /* 
-        if (isVisit((SVF::SVFGNode *)svfgnode) && isRecord) {
-            return upperDefs;
-        }
-        if (isRecord) {
-            visit((SVF::SVFGNode *)svfgnode);
-        }
-*/
         const SVF::SVFGNode::GEdgeSetTy &edges = vfgnode->getInEdges();
-        //    errs()<<edges.size()<<" RCE \n";
-        //    const SVFGNode::GEdgeSetTy edges(_edges);
-        // errs()<<" ccccbbbbbOURCE \n";
-        //   const SVFGNode::GEdgeSetTy _edges=svfgnode->getInEdges();
         errs() << "Number of dependencies : " << edges.size() << "\n";
         for (const auto& edge : edges) {
             //  errs()<<" SOUR\n";
@@ -137,7 +125,7 @@ struct DataflowGraphBuilder : public ModulePass {
             upperDefs.insert((SVFGNode *)src_vfgnode);
             errs() << " SOURCE vfgnode " << src_vfgnode->toString() << "\n";
         }
-        //    errs()<<" SENNNOUR\n";
+
         return upperDefs;
     }
 

@@ -13,10 +13,10 @@ calculate_workers() {
 read -p "Enter desired CPU load percentage (1-100): " CPU_LOAD_PERCENTAGE
 
 # Validate input
-if [[ "$CPU_LOAD_PERCENTAGE" -lt 1 || "$CPU_LOAD_PERCENTAGE" -gt 100 ]]; then
-    echo "Error: Please enter a valid percentage between 1 and 100."
-    exit 1
-fi
+#if [[ "$CPU_LOAD_PERCENTAGE" -lt 1 || "$CPU_LOAD_PERCENTAGE" -gt 100 ]]; then
+#    echo "Error: Please enter a valid percentage between 1 and 100."
+#    exit 1
+#fi
 
 # Calculate the number of workers to use
 WORKERS=$(calculate_workers $CPU_LOAD_PERCENTAGE)

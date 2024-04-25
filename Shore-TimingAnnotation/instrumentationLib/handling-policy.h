@@ -153,6 +153,9 @@ class TCViolationHandler {
      */
     int setIsPrioritizing(int val) { return _is_prioritizing = val; }
 
+
+    void setAborting(int val) { _is_aborting = val; }
+
     /**
      * @brief Checks if aborting is enabled.
      * @return 1 if aborting is enabled, 0 otherwise.

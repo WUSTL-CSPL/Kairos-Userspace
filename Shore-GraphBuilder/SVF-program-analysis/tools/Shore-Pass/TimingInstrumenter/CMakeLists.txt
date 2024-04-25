@@ -9,7 +9,7 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(PassTimingInstrumenter SHARED PassTimingInstrumenter.cpp)
+add_library(PassTimingInstrumenter SHARED PassTimingInstrumenter.cpp dependencyWalker.cpp)
 target_link_libraries(PassTimingInstrumenter PRIVATE Svf nlohmann_json::nlohmann_json) 
 
 
