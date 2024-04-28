@@ -30,6 +30,7 @@ The proof-of-concept system of our paper is called Shore. It primarily consists 
 | Shore-Middlware | [Link](https://github.com/WUSTL-CSPL/Shore-Middleware)        | Enforcement of runtime scheduling in ROS middleware.            |
 | Shore-Kernel    | [Link](https://github.com/WUSTL-CSPL/Shore-Kernel)        |     TRuntime enforcement of CPU scheduling and network packet scheduling in the Linux kernel.        |
 
+We also open source the timing issues we collected and studied in Motivation section: :point_right: [Link](https://docs.google.com/spreadsheets/d/1T9U3JW3TqtxoSwL6TSMVqNnIgA7G68Rl2C6eBjEB2Es/edit?usp=sharing)
 
 ### Source Code Layout 
 
