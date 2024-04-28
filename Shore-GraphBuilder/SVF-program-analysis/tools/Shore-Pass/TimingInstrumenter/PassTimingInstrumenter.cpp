@@ -94,12 +94,12 @@ struct TimingInstrumenter : public ModulePass {
     bool runOnModule(Module &M) override {
         bool is_transformed = false;
 
-        errs() << "Hello, I am in TimingInstrumenter Pass\n";
+        errs() << "[Shore-Pass] Hello, in the Timiming instrumenter LLVM pass\n";
 
         initialization(M);
 
         // Perform the points-to based data-flow analysis
-        // dataFlowAnalysis(M);
+        // dataFlowAnalysisOnPAG(M);
 
         // Insert the update of necessary vertices
 
@@ -121,7 +121,7 @@ struct TimingInstrumenter : public ModulePass {
 
     void initialization(Module &M);
 
-    void dataFlowAnalysis(Module &M);
+    void dataFlowAnalysisOnPAG(Module &M);
 
     bool instrumentTimingDefUpdateByGraph(Module &M);
 
@@ -137,7 +137,7 @@ struct TimingInstrumenter : public ModulePass {
 };
 
 
-void TimingInstrumenter::dataFlowAnalysis(Module &M) {
+void TimingInstrumenter::dataFlowAnalysisOnPAG(Module &M) {
     // Perform the points-to based data-flow analysis
 
     SVF::SVFModule* svfModule = SVF::LLVMModuleSet::getLLVMModuleSet()->buildSVFModule(M);
@@ -176,7 +176,6 @@ void TimingInstrumenter::dataFlowAnalysis(Module &M) {
 
     dependency_walker = new DepWalker(M, svfModule, pag, SymbolTableInfo::SymbolInfo()->valSyms(), svfg);
 
-
     // Walk through
       for (Function &F : M) {
             for (BasicBlock &BB : F) {
@@ -196,29 +195,11 @@ void TimingInstrumenter::dataFlowAnalysis(Module &M) {
                             called_function = invokeInst->getCalledFunction();
                         }
 
-                        if (called_function &&
-                            called_function->getName().contains("freshness")) {
-                            errs() << "Call to 'FRESHNESS' found in "
-                                      "function '"
-                                   << F.getName() << "'\n";
-                            is_annotated = 1;
-                        } else if (called_function &&
-                                   called_function->getName().contains(
-                                       "consistency")) {
-                            errs() << "Call to 'CONSISTENCY' found in "
-                                      "function '"
-                                   << F.getName() << "'\n";
-                            is_annotated = 1;
-                        } else if (called_function &&
-                                   called_function->getName().contains(
-                                       "stability")) {
-                            errs() << "Call to 'STABILITY' found in "
-                                      "function '"
-                                   << F.getName() << "'\n";
-
+                        if (called_function && (called_function->getName().contains("freshness") ||
+                                                called_function->getName().contains("consistency") ||
+                                                called_function->getName().contains("stability"))) {
                             is_annotated = 1;
                         }
-                    
                     
                         if (is_annotated) {
                             errs() << "Annotated Instruction: " << I << "\n";
@@ -231,6 +212,7 @@ void TimingInstrumenter::dataFlowAnalysis(Module &M) {
                                 
                                 // Get the parameter of the instruction
                                 llvm::Value *param = I.getOperand(0);
+
                                 errs() << "Hello, Parameter: " << *param << "\n";
 
                                 SVF::NodeID nodeId = pag->getValueNode(&I);

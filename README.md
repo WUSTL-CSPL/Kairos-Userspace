@@ -129,15 +129,11 @@ $ ./build_instrumentationLib.sh
 ### 3. Annotate the Timing Properties/Constraints **(C1)**
 
 User can annotate the timing property via Shore's API (i.e., FRESHNESS(), CONSISTENCY(), and STABILITY()). 
-The annotation might require some understanding of the target program, as discussed in the paper. We have already annotated three types of constraints in the source code:
+The annotation might require some understanding of the target program, as discussed in the paper. We have already annotated two types of constraints in the source code:
 - STABILITY() in the file `ORB_SLAM3/src/LocalMapping.cc`
 - CONSISTENCY() and STABILITY() in the file `ORB_SLAM3/Examples_old/ROS/ORB_SLAM3/src/ros_stereo_inertial.cc`
 
-
-Reviewers can modify the timing properties or annotate new constraints via the following API.
-
-
-
+Reviewers can modify the timing properties or annotate new constraints.
 
 ### 4. Compile and Instrument the Program to Enable DFA
 
@@ -152,7 +148,7 @@ $ ./instrument_orbslam_with_pass.sh
 ```
 
 ### 5. Launch the Kernel Module for User-Kernel Communication
-This step allows the target program to communicate with kernel schedulers, including task and network packet schedulers.
+This step allows the target program to communicate with kernel schedulers, including task and network packet schedulers. If the sudo password is required, it is `cspl`.
 
 ```
 $ cd ~/Shore-user/Shore-Interface/kernel-interface-module

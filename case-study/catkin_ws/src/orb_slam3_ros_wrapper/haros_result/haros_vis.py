@@ -79,7 +79,7 @@ if threads_labels:
     nx.draw_networkx_labels(G, pos, labels=threads_labels, font_weight='bold', clip_on=False)
 
 # Draw edges with arrows
-nx.draw_networkx_edges(G, pos, edgelist=G.edges(), edge_color='gray', arrows=False, arrowsize=20, node_size=2000)
+nx.draw_networkx_edges(G, pos, edgelist=G.edges(), edge_color='gray', arrowsize=20, node_size=2000)
 
 # Draw additional detail beside each topic
 for topic, details in topic_labels.items():
@@ -98,4 +98,4 @@ if threads_labels:
 plt.axis('off')
 # plt.title(f"ROS Nodes and Topics Relationship for '{config_name}' Configuration")
 plt.tight_layout()
-plt.savefig('haros_vis.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('haros_vis_new.pdf', format='pdf', bbox_inches='tight')

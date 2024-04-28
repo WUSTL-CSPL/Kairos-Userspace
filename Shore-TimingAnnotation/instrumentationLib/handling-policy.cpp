@@ -39,6 +39,8 @@ void TCViolationHandler::prioritization() {
     }
 
     pid_t tid = gettid();  // Fix the undefined identifier problem
+    // pid_t tid = getpid();  // Fix the undefined identifier problem
+    
     _shoreline_info->setKernelTaskID(tid);
 
     /*
@@ -63,6 +65,10 @@ void TCViolationHandler::prioritization() {
     // This will also impact on Network packet scheduler and then the middleware
     // FIXME do it via Shoreline ID
     ret = shore_user_add_task_to_cpu_list(tid);
+
+// #ifdef Shore_DEBUG
+    printf("[Shore-Debug] Task %d added to CPU list\n", tid);
+// #endif
 
     if (ret == 0) {
         setIsPrioritizing(1);
