@@ -59,21 +59,18 @@ We have prepared a remote machine with the entire environment set up. Evaluators
 We recommend that reviewers evaluate the artifact using the remote machine. This is advised because Shore requires modifications to both the Kernel and Middleware (ROS), necessitating recompilation and reinstallation. Additionally, it relies on multiple user-level libraries such as OpenCV, Pangolin, LLVM, etc., to run the tools and the targeted robotic applications. We have consolidated the installation of user dependencies into a single script and provided instructions for compiling the kernel and middleware. However, please note that this setup has only been tested on Ubuntu 20.04 with Linux Kernel 5.11.
 
 
+**Steps:**
+Please see the steps in Hotcrp website.
+
 **Source Code Layout:**
-The source code of three main components are located at:
+After login, the source code of three main components are located at:
 ```
 ~/Shore-kernel                   ## Shore-Kernel: https://github.com/WUSTL-CSPL/Shore-Kernel
 ~/Shore-user                     ## Shore-Userspace:  https://github.com/WUSTL-CSPL/Shore-Userspace  
 ~/ros_catkin_ws/src              ## Shore-Middleware: https://github.com/WUSTL-CSPL/Kernel-Middleware
 ```
 
-**Steps:**
-a. Download and install TeamViewer Free edition from https://www.teamviewer.com/en-us/content/free-download-with-license-options/.  
-b. Under "Control Remote Computer," enter `383780254` as the Partner ID.  
-c. Click "Connect" (You may need to register a free acount for remote connection).  
-d. Enter password `OSDI2024DFA!` and log on.  
-e. If the sudo password is required on the machine, it is `cspl`.  
-f. Start to run the :point_right: [End-to-End Running Example](#End-to-End-Running-Example).  
+ 
 
 ### Option #2: Build from Source Code on Your Local Machine
 
