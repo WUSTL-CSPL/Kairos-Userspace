@@ -129,7 +129,7 @@ $ ./build_instrumentationLib.sh
 User can annotate the timing property via Shore's API (i.e., FRESHNESS(), CONSISTENCY(), and STABILITY()). 
 The annotation might require some understanding of the target program, as discussed in the paper. We have already annotated two types of constraints in the source code:
 - STABILITY() in the file `ORB_SLAM3/src/LocalMapping.cc`
-- CONSISTENCY() and STABILITY() in the file `case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc`
+- CONSISTENCY() in the file `case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc`
 
 Reviewers can modify the timing properties or annotate new constraints.
 
