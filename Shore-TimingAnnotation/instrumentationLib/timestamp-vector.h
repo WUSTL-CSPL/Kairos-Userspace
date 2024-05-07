@@ -41,7 +41,7 @@ class TimestampVec {
         /* FOR EXPERIMENTS
         auto end = std::chrono::high_resolution_clock::now();
         timing_tag_update_waiting_time_vector.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(end
-        - start).count()/100.0);
+        - start).count()/1000.0);
         */
 
         buffer[tail] = value;
@@ -92,7 +92,7 @@ class TimestampVec {
         /* FOR EXPERIMENTS
         auto end = std::chrono::high_resolution_clock::now();
         timing_tag_update_waiting_time_vector.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(end
-        - start).count()/100.0);
+        - start).count()/1000.0);
         */
 
         for (size_t i = 0; i < size; ++i) {
@@ -141,11 +141,11 @@ class TimestampVec {
 
             if (max_interval > threshold) {
                 // Some frames are dropped
-// #ifdef Shore_DEBUG
+#ifdef Shore_DEBUG
                 printf("[Warning] Frame dropped\n");
                 printf("Max interval: %f, Min interval: %f\n", max_interval,
                        min_interval);
-// #endif // Shore_DEBUG
+#endif // Shore_DEBUG
                 return -1;
             }
 
@@ -178,7 +178,7 @@ class TimestampVec {
 
         auto end = std::chrono::high_resolution_clock::now();
         timing_tag_update_waiting_time_vector.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(end
-        - start).count()/100.0);
+        - start).count()/1000.0);
         */
 
         if (count <= 0) return T();  // Should ensure there's data to pop

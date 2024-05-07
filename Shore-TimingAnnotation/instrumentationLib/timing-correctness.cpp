@@ -313,7 +313,7 @@ void TimingVertex::updateTimingVertex(double sensor_timestamp) {
         printf(
             "[Timing Update] Vertex %d is updated with def time from sensor "
             "timestamp is %f \n",
-            this->id, sensor_timestamp);
+            this->_id, sensor_timestamp);
 #endif  // SHORE_DEBUG
 
         // In our testing scenario, the data is recorded and replayed, thus we
@@ -346,7 +346,7 @@ void TimingVertex::updateTimingVertex(double sensor_timestamp) {
     this->updateUseTiming();
 
 #ifdef SHORE_DEBUG
-    printf("[Timing Update] Vertex %d is updated with use time %f\n", this->id,
+    printf("[Timing Update] Vertex %d is updated with use time %f\n", this->_id,
            this->uses->latest());
 #endif  // SHORE_DEBUG
     return;
@@ -458,7 +458,7 @@ bool TimingVertex::checkConsistency(double threshold) {
     }
 
 #ifdef SHORE_DEBUG
-    printf("Consistency is checked at node %d\n", this->id);
+    printf("Consistency is checked at node %d\n", this->_id);
 #endif  // SHORE_DEBUG
 
     // Check consistency

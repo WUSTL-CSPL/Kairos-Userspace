@@ -59,7 +59,7 @@ void TCViolationHandler::prioritization() {
             printf("[Error] Failed to elevate task in ROS callback.\n");
         }
     }
-    printf("[Shore-Debug] ROS callback is prioritized \n");
+    printf("[Shore-Debug] ROS callback is set to be prioritized \n");
 #endif
 
     // This will also impact on Network packet scheduler and then the middleware
