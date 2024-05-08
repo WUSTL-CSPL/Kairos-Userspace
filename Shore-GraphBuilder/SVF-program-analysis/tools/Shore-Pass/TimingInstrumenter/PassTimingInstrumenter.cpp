@@ -653,6 +653,29 @@ bool TimingInstrumenter::instrumentTimingChecks(Module &M) {
                         StringRef function_name = current_function->getName();
 
                         // find the original name of the function
+                        // Check if the vertex is in input tasks
+                        
+                        /*
+                        std::vector<std::string> _input_task_names;
+                        std::map<llvm::Function*, int> _input_function_to_id_map;
+                        */
+
+                        for (std::string& input_name : _input_task_names) {
+                            if (function_name.contains(input_name)) {
+                                errs() << "The function name is : " << function_name << "\n";
+                                // Get the dependee vertex id
+                                int dependee_vertex_id = _input_function_to_id_map[current_function];
+                                errs() << "The current vertex id is : "  << _timing_vertex_index 
+                                       << "  , the dependee vertex id is : " << dependee_vertex_id << "\n";
+                                // Store the dependency
+                                _vertex_dependency_map[_timing_vertex_index]
+                                        .push_back(dependee_vertex_id);
+                            }
+                        }
+
+
+
+                        // Throught the dependency map
                         for (auto &pair : _function_to_input_dependency_map) {
                             if (function_name.contains(pair.first)) {
                                 // Get the vertex id
@@ -666,8 +689,8 @@ bool TimingInstrumenter::instrumentTimingChecks(Module &M) {
                                         _input_function_name_to_id_map
                                             [dep_function_name];
 
-                                    errs() << "The depenedency vertex id is: "
-                                           << dep_vertex_id << "\n";
+                                    errs() << "The current vertex id is : "  << _timing_vertex_index 
+                                           << "  , the dependee vertex id is : " << dep_vertex_id << "\n";
 
                                     // Store the dependency
                                     _vertex_dependency_map[_timing_vertex_index]
@@ -700,9 +723,10 @@ void TimingInstrumenter::dumpVertexDependencyMap() {
             for (int dep_vertex_id : entry.second) {
                 output_file << dep_vertex_id << " ";
             }
-            output_file << "\n\n";
-            output_file.close();
+            output_file << "\n";
         }
+
+        output_file.close();
         errs() << "Stored _vertex_dependency_map in "
                   "vertex_dependency_map.txt\n";
     } else {

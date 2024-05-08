@@ -7,7 +7,7 @@
 #include <vector>
 #include <unordered_map>
 
-// #define SHORE_DEBUG
+//#define SHORE_DEBUG
 
 
 /*
@@ -124,40 +124,48 @@ void readNumbersFromFile(const std::string& file_name,
     }
 
     std::string line;
-    if (std::getline(file, line)) {
+    while (std::getline(file, line)) {
         std::istringstream iss(line);
-        int dependee_id;
+        int dependent_id;
         char arrow;
-        iss >> dependee_id >> arrow >> arrow;
+        
+        iss >> dependent_id >> arrow >> arrow;
 
-        std::vector<int> dependents_ids;
+        std::vector<int> dependees_ids;
+        
         int num;
 
         while (iss >> num) {
-            dependents_ids.push_back(num);
+            dependees_ids.push_back(num);
+        }
+
+        // Output the node and its connections for verification
+        std::cout << "Node " << dependent_id << " is connected to: ";
+        for (int conn : dependees_ids) {
+            std::cout << conn << " ";
         }
 
         dependency_map->insert(
-            std::pair<int, std::vector<int>>(dependee_id, dependents_ids));
-
-        file.close();
+            std::pair<int, std::vector<int>>(dependent_id, dependees_ids));
     }
 
-#ifdef SHORE_DEBUG
+    file.close();
+
+// #ifdef SHORE_DEBUG
     // Print debug information
 
         for (const auto& entry : *_dependency_map_by_vertex_id) {
-            int dependee_id = entry.first;
-            const std::vector<int>& dependents_ids = entry.second;
+            int dependent_id = entry.first;
+            const std::vector<int>& dependees_ids = entry.second;
 
-            std::cout << "Dependee ID: " << dependee_id << std::endl;
-            std::cout << "Dependents IDs: ";
-            for (int dependent_id : dependents_ids) {
+            std::cout << "Dependent ID: " << dependent_id << std::endl;
+            std::cout << "Dependeees IDs: ";
+            for (int dependent_id : dependees_ids) {
                 std::cout << dependent_id << " ";
             }
             std::cout << std::endl;
         }
-#endif  // SHORE_DEBUG
+// #endif  // SHORE_DEBUG
 
     return;
 }
@@ -431,21 +439,23 @@ TimingCorrectness::TimingCorrectness(enum TimingConstraintType type,
 #endif  // SHORE_DEBUG
 
     _vertex = new TimingVertex(0, 10);  
-        // FIXME: hardcode the size of timestamp vector
+        // FIXME: hardcoded the size of timestamp vector
 };
 
 bool TimingVertex::checkFreshness(double threshold) {
     double data_age = 0;
     double curr_data_age = 0;
     for (int i = 0; i < this->_prec_vertexes.size(); i++) {
-        curr_data_age = this->_prec_vertexes[i]->get_lastest_def_timestamp() -
-                        this->get_lastest_use_timestamp();
+        curr_data_age = this->get_lastest_use_timestamp() -
+                        this->_prec_vertexes[i]->get_lastest_def_timestamp();
+
         data_age = std::max(data_age, curr_data_age);
     }
+
     if (data_age > threshold) {
-        printf("Data age is %f, which is greater than the threshold %f\n",
+        printf("[Shore-Debug] Warning !!! Data age is %f, which is greater than the threshold %f\n",
                data_age, threshold);
-        // _policy_handler.handle();
+
         return true;
     }
     return false;
@@ -676,12 +686,15 @@ int checkTimingCorrectnessByID(int id, int property, double threshold,
             ret = 1;
         }
 
+        if (handler->shouldSkip()) {
+            ret = 1;
+        }
     } 
     // else {
-        // if (handler->isPrioritizing()) {
-        //     handler->setIsPrioritizing(0);
-        //     handler->resetPriority();
-        // }
+    //     if (handler->isPrioritizing()) {
+    //         handler->setIsPrioritizing(0);
+    //         handler->resetPriority();
+    //     }
     // }
 
     return ret;

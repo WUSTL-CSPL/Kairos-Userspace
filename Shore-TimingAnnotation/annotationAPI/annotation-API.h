@@ -5,6 +5,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <mutex>
 #include <vector>
 
 enum HandlingPolicy { NONE = 0, ABORT = 1, PRIORITIZATION = 2, SKIP_NEXT };
@@ -15,20 +16,25 @@ enum HandlingPolicy { NONE = 0, ABORT = 1, PRIORITIZATION = 2, SKIP_NEXT };
 
 // The unit of threshold is in seconds for simplifying the specification
 
-#define FRESHNESS(x, t, policy) \
-    freshness(x, t, policy);    \
+extern std::mutex should_abort_mutex;
+
+#define FRESHNESS(x, thres, policy)                            \
+    freshness(x, thres, policy);                               \
     \  
-    if (shouldAbort == 1) {     \
-        shouldAbort = 0;        \
-        return;                 \
+    if (shouldAbort == 1) {                                    \
+        std::lock_guard<std::mutex> guard(should_abort_mutex); \
+        shouldAbort = 0;                                       \
+        \ 
+        printf("Abort frame\n");                               \
+        return;                                                \
     }
 
-#define FRESHNESS(x, t, policy) \
-    freshness(x, t, policy);    \
+#define FRESHNESS_C(x, thres, policy) \
+    freshness(x, thres, policy);      \
     \  
-    if (shouldAbort == 1) {     \
-        shouldAbort = 0;        \
-        continue;               \
+    if (shouldAbort == 1) {           \
+        shouldAbort = 0;              \
+        continue;                     \
     }
 
 #define STABILITY(var, thres, policy) \
@@ -47,19 +53,20 @@ enum HandlingPolicy { NONE = 0, ABORT = 1, PRIORITIZATION = 2, SKIP_NEXT };
         continue;                       \
     }
 
-#define CONSISTENCY(x, y, t, policy) \
-    consistency(x, y, t, policy);    \
+#define CONSISTENCY(x, y, thres, policy) \
+    consistency(x, y, thres, policy);    \
     \  
-    if (shouldAbort == 1) {          \
-        shouldAbort = 0;             \
-        return;                      \
+    if (shouldAbort == 1) {              \
+        shouldAbort = 0;                 \
+        return;                          \
     }
 
-#define CONSISTENCY_C(x, y, t, policy) \
-    consistency(x, y, t, policy);      \
-    if (shouldAbort == 1) {            \
-        shouldAbort = 0;               \
-        continue;                      \
+#define CONSISTENCY_C(x, y, thres, policy)                     \
+    consistency(x, y, thres, policy);                          \
+    if (shouldAbort == 1) {                                    \
+        std::lock_guard<std::mutex> guard(should_abort_mutex); \
+        shouldAbort = 0;                                       \
+        continue;                                              \
     }
 
 #define CONSISTENCY3_C(var1, var2, var3, thres, policy) \
@@ -69,10 +76,8 @@ enum HandlingPolicy { NONE = 0, ABORT = 1, PRIORITIZATION = 2, SKIP_NEXT };
         continue;                                       \
     }
 
-
 // This is not used in the current implementation
 #define INPUT(x) input(x->get());
-
 
 /*
  * Function declarations

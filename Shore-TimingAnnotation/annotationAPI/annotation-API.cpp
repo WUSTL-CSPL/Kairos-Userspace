@@ -32,4 +32,9 @@ void input(void* var) {
     // printf("INPUT is called\n");
     return;
 }
+
+
+std::vector<int> abort_flag_list;
+std::mutex should_abort_mutex;
+
 // End of Annotation API

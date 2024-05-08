@@ -60,6 +60,7 @@ void TCViolationHandler::prioritization() {
         }
     }
     printf("[Shore-Debug] ROS callback is set to be prioritized \n");
+
 #endif
 
     // This will also impact on Network packet scheduler and then the middleware
