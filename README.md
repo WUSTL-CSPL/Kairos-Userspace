@@ -1,37 +1,22 @@
-# OSDI 2024 Artifact --  Data-flow Availability: Achieving Timing Assurance in Autonomous Systems
+# OSDI 2024 --  Data-flow Availability: Achieving Timing Assurance in Autonomous Systems
 
 ## Introduction
 
 This document gives the instructions for evaluating the functionality in the OSDI 2024 paper, "Data-flow Availability: Achieving Timing Assurance in Autonomous Systems."
 
 
-The paper addresses the timing specification and enforcement in modern autonomous systems. To fully understand the system, users would benefit from being familiar with robotic applications and Robot Operating System (ROS) middleware. 
 
 
-contact: ao@wustl.edu
-
-## Artifact Claims
-
-This artifact is aimed mainly to verify the two primary functionalities of Shore:
-
-- **(C1)** Allowing users to specify timing constraints in user space via a given API.
-- **(C2)** Enabling the enforcement of specified timing constraints across scheduling layers, including the ROS middleware, Kernel scheduler, and Network stack.
-
-
-## Artifact Components
-
-
-### Overview
+## Overview
 The proof-of-concept system of our paper is called Shore. It primarily consists of three GitHub repositories.
 
 | Project name    | Github Link | Description |
 |-----------------|-------------|-------------|
 | Shore-Userspace | [Link](https://github.com/WUSTL-CSPL/Shore-Userspace)        |     This repository contains the Shore's compiler passes and tools used in user space.         |
-| Shore-Middlware | [Link](https://github.com/WUSTL-CSPL/Shore-Middleware)        | Enforcement of runtime scheduling in ROS middleware.            |
-| Shore-Kernel    | [Link](https://github.com/WUSTL-CSPL/Shore-Kernel)        |     TRuntime enforcement of CPU scheduling and network packet scheduling in the Linux kernel.        |
+| Shore-Middlware | [Link](https://github.com/WUSTL-CSPL/Shore-Middleware)        | Runtime enforcement of scheduling in ROS middleware.            |
+| Shore-Kernel    | [Link](https://github.com/WUSTL-CSPL/Shore-Kernel)        |     Runtime enforcement of CPU scheduling and network packet scheduling in the Linux kernel.        |
 
-We also open source the timing issues we collected and studied in Motivation section: :point_right: [Link](https://docs.google.com/spreadsheets/d/1T9U3JW3TqtxoSwL6TSMVqNnIgA7G68Rl2C6eBjEB2Es/edit?usp=sharing)
-
+We also open source the timing issues we collected and studied in Motivation section: :point_right: [Link](todo)
 ### Source Code Layout 
 
 * **Shore-User**:
@@ -52,37 +37,15 @@ We also open source the timing issues we collected and studied in Motivation sec
 
 ## Getting Started
 
-### Option #1: Log on the Remote Machine (Recommended)
+**Build from Source Code on Your Local Machine**
 
-We have prepared a remote machine with the entire environment set up. Evaluators can log into this machine via **TeanViewer** to evaluate the functionality of Shore.
-
-We recommend that reviewers evaluate the artifact using the remote machine. This is advised because Shore requires modifications to both the Kernel and Middleware (ROS), necessitating recompilation and reinstallation. Additionally, it relies on multiple user-level libraries such as OpenCV, Pangolin, LLVM, etc., to run the tools and the targeted robotic applications. We have consolidated the installation of user dependencies into a single script and provided instructions for compiling the kernel and middleware. However, please note that this setup has only been tested on Ubuntu 20.04 with Linux Kernel 5.11.
-
-
-**Steps:**
-Please see the steps in Hotcrp website.
-
-**Source Code Layout:**
-After login, the source code of three main components are located at:
-```
-~/Shore-kernel                   ## Shore-Kernel: https://github.com/WUSTL-CSPL/Shore-Kernel
-~/Shore-user                     ## Shore-Userspace:  https://github.com/WUSTL-CSPL/Shore-Userspace  
-~/ros_catkin_ws/src              ## Shore-Middleware: https://github.com/WUSTL-CSPL/Kernel-Middleware
-```
-
- 
-
-### Option #2: Build from Source Code on Your Local Machine
-
-If you want to build from source code. Please go the guided of installation:
+Please go the guided of installation:
 
 Shore-Userspace: :point_right: [link](https://github.com/WUSTL-CSPL/Shore-Userspace/blob/main/INSTALLATION.md)  
 Shore-Middleware: :point_right:  [link](https://github.com/WUSTL-CSPL/Shore-Middleware/blob/main/README.md)  
 Shore-Kernel: :point_right:  [link](https://github.com/WUSTL-CSPL/Shore-Kernel/blob/main/README.MD)
 
-
-
-## End-to-End Running Example
+## A Running Example
 
 We use ORB-SLAM3 as the running example to demonstrate the functionality. ORB-SLAM3 is also the running example utilized in our submission paper (Section III).
 
@@ -124,7 +87,7 @@ $ cd ~/Shore-user/Shore-TimingAnnotation/
 $ ./build_instrumentationLib.sh
 ```
 
-### 3. Annotate the Timing Properties/Constraints **(C1)**
+### 3. Annotate the Timing Properties/Constraints
 
 User can annotate the timing property via Shore's API (i.e., FRESHNESS(), CONSISTENCY(), and STABILITY()). 
 The annotation might require some understanding of the target program, as discussed in the paper. We have already annotated two types of constraints in the source code:
@@ -172,7 +135,7 @@ Enter desired CPU load percentage (1-100): # enter 60 here.
 
 
 
-### 7. Run ORB-SLAM and Obtain the Results **(C2)**
+### 7. Run ORB-SLAM and Obtain the Results
 
 **1. Run ORB-SLAM3:**
 
@@ -265,40 +228,3 @@ The steps outlined above generate results for ORB-SLAM under high system overhea
 (ii) **abnormal.txt** - under high system overhead but without the Shore mitigation. This requires:
 - Commenting out also`STABILITY()` in the file `~/Shore-user/case-study/ORB_SLAM3/src/LocalMapping.cc`.
 - Commenting out also `CONSISTENCY()` in the file `~/Shore-user/case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc` within the ORB_SLAM3 source code. Then, recompile the project as per Step 3, inject overhead as described in Step 5, and run it as outlined in Step 6. 
-
-
-
-## [Optional] Enable More Logs to Further Verify the Functionalities
-
-We disabled many logs by default to prevent application lag due to the high processing frequency. Evaluators can enable these logs to verify functionality.  
-
-
-* To verify the timing information updating and constraint annotation.  
-
-    a. Go to the file `~/Shore-user/Shore-TimingAnnotation/instrumentationLib/timing-correctness.cpp`  
-    b. Uncomment this line `// #define SHORE_DEBUG`  
-    c. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)  
-
-
-* To verify the scheduling decision enforcement across layer 
-
-    * ROS scheduler
-        a. Go to the file `~/ros_catkin_ws/src/ros_comm/roscpp/include/ros/param.h`  
-        b. Uncomment this line `// #define Shore_Debug`  
-        c. Compile the ROS middleware  
-        ```
-        $ cd ~/ros_catkin_ws
-        $ ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release            
-        ```
-        d. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)  
-
-    <!-- * Kernel and network schedulers    
-        a. Go to the file
-        b. Uncomment
-        c. Re-compile the kernel
-        ```
-        FIXME
-        ```
-
-        d. Re-execute the steps **2,4,6,7,8** in [Running Example](#End-to-End-Running-Example)
-  -->

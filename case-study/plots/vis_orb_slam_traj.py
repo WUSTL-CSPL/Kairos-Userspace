@@ -311,7 +311,7 @@ ax.plot(gtxs[:gindex], gtys[:gindex], gtzs[:gindex], linewidth=3, color='black',
 ax.plot(xs, ys, zs, linewidth=3, color=colors[2], label= 'Basline')
 ax.plot(axs, ays, azs, linewidth=3, color=colors[3], label= 'Abnormal Timings')
 ax.plot(dfa_xs, dfa_ys, dfa_zs, linewidth=3, color=colors[4], label= 'DFA')
-ax.plot(infocomm_xs, infocomm_ys, infocomm_zs, linewidth=3, color=colors[6], label= 'AdapSLAM')
+ax.plot(infocomm_xs, infocomm_ys, infocomm_zs, linewidth=3, color=colors[6], label= 'Adaptive SLAM')
 # ax.plot(oxs, oys, ozs, linewidth=1.5, color=colors[0], label= 'Ours in Resource-constrained Platform', path_effects=[pe.Stroke(linewidth=3, foreground='darkslategray'), pe.Normal()])
 ax.legend() #fontsize=16)
 ax.set_xlabel('X [m]') #, fontsize=16)

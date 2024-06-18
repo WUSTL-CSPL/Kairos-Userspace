@@ -308,7 +308,7 @@ print("Average infocomm_errors:", average_error)
 ax.plot(baseline_errors[::20], linewidth=3, color=colors[2], label= 'Basline')
 ax.plot(abnormal_timing_errors[::20], linewidth=3, color=colors[3], label= 'Abnormal Timings')
 ax.plot(dfa_errors[::20], linewidth=3, color=colors[4], label= 'DFA')
-ax.plot(infocomm_errors[::20], linewidth=3, color=colors[6], label= 'AdapSLAM')
+ax.plot(infocomm_errors[::20], linewidth=3, color=colors[6], label= 'Adaptive SLAM')
 
 ax.legend(loc='upper left') #fontsize=16)
 ax.set_ylabel('Relative Translation Error [m]')
