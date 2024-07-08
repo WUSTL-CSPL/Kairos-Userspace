@@ -2,34 +2,57 @@
 
 ## Introduction
 
-This document gives the instructions for evaluating the functionality in the OSDI 2024 paper, "Data-flow Availability: Achieving Timing Assurance in Autonomous Systems."
+Data-flow Availability aims to facilitate the programming of timing constraints in robotic software, thereby mitigating timing issues. A previous study on this topic can be found in the [RTAS'24 paper](https://ieeexplore.ieee.org/document/10568068), which empirically studyies timing violation patterns and impats in real-world robotic software.
 
 
+If you find they are useful to your work, please consider citing our papers:
+
+
+```bibtex
+@inproceedings {li2024dfa,
+author = {Li, Ao and Zhang, Ning},
+title = {Data-flow Availability: Achieving Timing Assurance in Autonomous Systems},
+booktitle = {18th USENIX Symposium on Operating Systems Design and Implementation (OSDI'24)},
+year = {2024},
+publisher = {USENIX Association}
+}
+```
+
+```bibtex
+@inproceedings{li2024empirical,
+  title={An empirical study of performance interference: Timing violation patterns and impacts},
+  author={Li, Ao and Wang, Jinwen and Baruah, Sanjoy and Sinopoli, Bruno and Zhang, Ning},
+  booktitle={Proceedings of the 30th IEEE Real-Time and Embedded Technology and Applications Symposium (RTAS'24)},
+  year={2024},
+  organization={IEEE Computer Society Press}
+}
+```
 
 
 ## Overview
-The proof-of-concept system of our paper is called Shore. It primarily consists of three GitHub repositories.
+
+Our proof-of-concept system is called Kairos. Previously, it was referred to as Shore, so you might still see some inconsistencies in the code where it is called by the old name. It primarily consists of three GitHub repositories.
 
 | Project name    | Github Link | Description |
 |-----------------|-------------|-------------|
-| Shore-Userspace | [Link](https://github.com/WUSTL-CSPL/Shore-Userspace)        |     This repository contains the Shore's compiler passes and tools used in user space.         |
-| Shore-Middlware | [Link](https://github.com/WUSTL-CSPL/Shore-Middleware)        | Runtime enforcement of scheduling in ROS middleware.            |
-| Shore-Kernel    | [Link](https://github.com/WUSTL-CSPL/Shore-Kernel)        |     Runtime enforcement of CPU scheduling and network packet scheduling in the Linux kernel.        |
+| Kairos-Userspace | [Link](https://github.com/WUSTL-CSPL/Kairos-Userspace)        |     This repository contains the Kairos's compiler passes and tools used in user space.         |
+| Kairos-Middlware | [Link](https://github.com/WUSTL-CSPL/Kairos-Middleware)        | Runtime enforcement of scheduling in ROS middleware.            |
+| Kairos-Kernel    | [Link](https://github.com/WUSTL-CSPL/Kairos-Kernel)        |     Runtime enforcement of CPU scheduling and network packet scheduling in the Linux kernel.        |
 
 We also open source the timing issues we collected and studied in Motivation section: :point_right: [Link](todo)
 ### Source Code Layout 
 
-* **Shore-User**:
-    - `/Shore-CompilerLLLVMUtils`: CMake scripts for automating the compilation via LLVM passes.
-    - `/Shore-GraphBuilder`: Files for building _Timing Dependency Graph_.
+* **Kairos-User**:
+    - `/Kairos-CompilerLLLVMUtils`: CMake scripts for automating the compilation via LLVM passes.
+    - `/Kairos-GraphBuilder`: Files for building _Timing Dependency Graph_.
         - `/ROS-depenedency-analyzer`: Python scripts to analyze the dependencies in ROS applications.
-    - `/Shore-TimingAnnotation`: Files for annotating timing correctness properties
+    - `/Kairos-TimingAnnotation`: Files for annotating timing correctness properties
         - `/handling-policy`: The files for defining handling policies.
-    - `/Shore-Interface`: Kernel module that handles the scheduling decision from user-space. 
+    - `/Kairos-Interface`: Kernel module that handles the scheduling decision from user-space. 
     - `/ORB-SLAM3`: Running example, ORB-SLAM, downloaded from this [link](https://github.com/UZ-SLAMLab/ORB_SLAM3).
-* **Shore-Kernel**:  
+* **Kairos-Kernel**:  
     - The modifications are mainly located in `kernel/sched` and `net/sched`. Most added functions and structs are marked by prefix `shore_`.
-* **Shore-Middleware**: . . 
+* **Kairos-Middleware**: . . 
     - Most modifications are in the `ros_comm/roscpp/` folder. These modifications primarily involve:
         - Integrating additional logic into the vanilla scheduler.
         - Passing shoreline information to associate it with user-level tasks and kernel tasks.
@@ -41,9 +64,9 @@ We also open source the timing issues we collected and studied in Motivation sec
 
 Please go the guided of installation:
 
-Shore-Userspace: :point_right: [link](https://github.com/WUSTL-CSPL/Shore-Userspace/blob/main/INSTALLATION.md)  
-Shore-Middleware: :point_right:  [link](https://github.com/WUSTL-CSPL/Shore-Middleware/blob/main/README.md)  
-Shore-Kernel: :point_right:  [link](https://github.com/WUSTL-CSPL/Shore-Kernel/blob/main/README.MD)
+Kairos-Userspace: :point_right: [link](https://github.com/WUSTL-CSPL/Kairos-Userspace/blob/main/INSTALLATION.md)  
+Kairos-Middleware: :point_right:  [link](https://github.com/WUSTL-CSPL/Kairos-Middleware/blob/main/README.md)  
+Kairos-Kernel: :point_right:  [link](https://github.com/WUSTL-CSPL/Kairos-Kernel/blob/main/README.MD)
 
 ## A Running Example
 
@@ -56,13 +79,13 @@ Steps:
 
 1. Go to the haros analyzer directory:
 ```
-$ cd ~/Shore-user/case-study/haros
+$ cd ~/Kairos-User/case-study/haros
 ```
 2. Run the visualization script using the following command:
 ```
 $ source ./vis_script.sh
 ```
-3. The script will cp the generated result `haros_vis.pdf` to `~/Shore-user/case-study/haros`.
+3. The script will cp the generated result `haros_vis.pdf` to `~/Kairos-user/case-study/haros`.
 
 
 <img src="./scripts/vis.pdf" alt="task-data-dependency" width="700" height="400">
@@ -76,20 +99,20 @@ The figure displays the task names and their data dependencies, indicated by arr
 
 Compile the LLVM pass
 ```
-$ cd ~/Shore-user/Shore-GraphBuilder/SVF-program-analysis
+$ cd ~/Kairos-user/Kairos-GraphBuilder/SVF-program-analysis
 $ ./build.sh
 ```
 
 Compile the libs requirement by instrumentation
 
 ```
-$ cd ~/Shore-user/Shore-TimingAnnotation/
+$ cd ~/Kairos-user/Kairos-TimingAnnotation/
 $ ./build_instrumentationLib.sh
 ```
 
 ### 3. Annotate the Timing Properties/Constraints
 
-User can annotate the timing property via Shore's API (i.e., FRESHNESS(), CONSISTENCY(), and STABILITY()). 
+User can annotate the timing property via Kairos's API (i.e., FRESHNESS(), CONSISTENCY(), and STABILITY()). 
 The annotation might require some understanding of the target program, as discussed in the paper. We have already annotated two types of constraints in the source code:
 - STABILITY() in the file `ORB_SLAM3/src/LocalMapping.cc`
 - CONSISTENCY() in the file `case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc`
@@ -100,7 +123,7 @@ Reviewers can modify the timing properties or annotate new constraints.
 
 Compile ORB-SLAM3 library and its ROS executable
 ```
-$ cd ~/Shore-user/case-study
+$ cd ~/Kairos-user/case-study
 $ ./compile_orb_slam_with_ros.sh 
 ```
 Instrument the program via LLVM pass
@@ -112,7 +135,7 @@ $ ./instrument_orbslam_with_pass.sh
 This step allows the target program to communicate with kernel schedulers, including task and network packet schedulers. If the sudo password is required, it is `cspl`.
 
 ```
-$ cd ~/Shore-user/Shore-Interface/kernel-interface-module
+$ cd ~/Kairos-user/Kairos-Interface/kernel-interface-module
 ### The usage is sudo ./shore_kernel_support_script.sh <enable|disable>
 $ sudo ./shore_kernel_support_script.sh enable
 ```
@@ -128,7 +151,7 @@ Install the aggressor workload tool __stress-ng__ if necessary
 
 Launch the aggressor workload to inject CPU overhead, and then proceed to the next step without waiting for it to finish.
 ```
-$ cd ~/Shore-user/Shore-Interface
+$ cd ~/Kairos-user/Kairos-Interface
 $ ./inject-CPU-overhead.sh
 Enter desired CPU load percentage (1-100): # enter 60 here. 
 ```
@@ -148,23 +171,23 @@ Open three separate terminals and then
   ```  
   Terminal 2: 
   ```
-  $ source ~/Shore-user/case-study/catkin_ws/devel/setup.bash
+  $ source ~/Kairos-user/case-study/catkin_ws/devel/setup.bash
   $ roslaunch orb_slam3_ros_wrapper euroc_stereoimu.launch
   ```  
 
-Wait until the terminal displays the log: `[Shore-Middleware] User-level task is registered`.
+Wait until the terminal displays the log: `[Kairos-Middleware] User-level task is registered`.
   
   Terminal 3: 
   ```
-  $ cd ~/Shore-user/case-study/
+  $ cd ~/Kairos-user/case-study/
   $ rosbag play MH_03_medium.bag
   ```  
 
 
-Output Logs: Some logs are tagged with [Shore-debug] and may be outputted. These logs include default timestamps, usage timestamps, and anomaly detection details. For example:
+Output Logs: Some logs are tagged with [Kairos-debug] and may be outputted. These logs include default timestamps, usage timestamps, and anomaly detection details. For example:
 
 ```
-[Shore-Middlware] User-level task is registered
+[Kairos-Middlware] User-level task is registered
 
 Vertex ID: 3
 Current Def Timestamp is : 1403637258.488319 ｜ 
@@ -199,13 +222,13 @@ Once a run is complete (specifically, when the `rosbag play` program in Terminal
 
 Once a run is complete, copy the output file `FrameTrajectory_TUM_Format.txt` to the appropriate folder: 
 ```
-$ mv ~/.ros/FrameTrajectory_TUM_Format.txt ~/Shore-user/case-study/plots/data/dfa.txt
+$ mv ~/.ros/FrameTrajectory_TUM_Format.txt ~/Kairos-user/case-study/plots/data/dfa.txt
 ```
 
 Visualize the trajectories
 
 ```
-$ cd ~/Shore-user/case-study/plots
+$ cd ~/Kairos-user/case-study/plots
 $ python3 vis_orb_slam_traj.py
 ```
 This will produce the figure `dfa_on_orbslam.pdf` (Figure 4(a) in the paper).
@@ -219,12 +242,12 @@ This will reproduce the figure `orb-slam-errors.pdf` (Figure 4(b) in the paper).
 
 ### 9. [Optional] Generating Other Results
 
-The steps outlined above generate results for ORB-SLAM under high system overhead with Shore mitigation. Users can also follow these steps to generate results in `~/Shore-user/case-study/plots/data`:
+The steps outlined above generate results for ORB-SLAM under high system overhead with Kairos mitigation. Users can also follow these steps to generate results in `~/Kairos-user/case-study/plots/data`:
 
 (i) **baseline.txt** - without system overhead. This can be achieved by commenting out:
-- `STABILITY()` in the file `~/Shore-user/case-study/ORB_SLAM3/src/LocalMapping.cc`.
-- `CONSISTENCY()` in the file `~/Shore-user/case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc` within the ORB_SLAM3 source code. Then, recompile the project as per Step 3 and run it as outlined in Step 6.
+- `STABILITY()` in the file `~/Kairos-user/case-study/ORB_SLAM3/src/LocalMapping.cc`.
+- `CONSISTENCY()` in the file `~/Kairos-user/case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc` within the ORB_SLAM3 source code. Then, recompile the project as per Step 3 and run it as outlined in Step 6.
 
-(ii) **abnormal.txt** - under high system overhead but without the Shore mitigation. This requires:
-- Commenting out also`STABILITY()` in the file `~/Shore-user/case-study/ORB_SLAM3/src/LocalMapping.cc`.
-- Commenting out also `CONSISTENCY()` in the file `~/Shore-user/case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc` within the ORB_SLAM3 source code. Then, recompile the project as per Step 3, inject overhead as described in Step 5, and run it as outlined in Step 6. 
+(ii) **abnormal.txt** - under high system overhead but without the Kairos mitigation. This requires:
+- Commenting out also`STABILITY()` in the file `~/Kairos-user/case-study/ORB_SLAM3/src/LocalMapping.cc`.
+- Commenting out also `CONSISTENCY()` in the file `~/Kairos-user/case-study/catkin_ws/src/orb_slam3_ros_wrapper/src/stereo_inertial_node.cc` within the ORB_SLAM3 source code. Then, recompile the project as per Step 3, inject overhead as described in Step 5, and run it as outlined in Step 6. 
